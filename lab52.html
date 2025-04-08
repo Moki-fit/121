@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .balloon {
+            position: fixed;
+            width: 50px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: hsl(0, 100%, 50%);
+            transition: none;
+            cursor: pointer;
+        }
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25px;
+            width: 2px;
+            height: 20px;
+            background-color: black;
+        }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            const hue = Math.random() * 360;
+            balloon.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+            document.body.appendChild(balloon);
+            
+            const x = Math.random() * (window.innerWidth - 50);
+            const y = window.innerHeight + 60;
+            balloon.style.transform = `translate(${x}px, ${y}px)`;
+            
+            return {
+                element: balloon,
+                x: x,
+                y: y,
+                riseSpeed: Math.random() * 2 + 1,
+                hue: hue,
+                colorSpeed: 0.5,
+                scaleAmplitude: Math.random() * 0.3 + 0.2,
+                scaleSpeed: Math.random() * 0.005 + 0.003,
+                startTime: Date.now()
+            };
+        }
+
+        const balloons = [];
+        for (let i = 0; i < 10; i++) {
+            balloons.push(createBalloon());
+        }
+
+        function animate() {
+            balloons.forEach(balloon => {
+                const currentTime = Date.now();
+                const timeElapsed = currentTime - balloon.startTime;
+                const scale = 1 + Math.sin(timeElapsed * balloon.scaleSpeed) * balloon.scaleAmplitude;
+                
+                // Update transformations
+                balloon.element.style.transform = 
+                    `translate(${balloon.x}px, ${balloon.y}px) scale(${scale})`;
+                
+                // Update color
+                balloon.hue += balloon.colorSpeed;
+                if (balloon.hue >= 360) balloon.hue = 0;
+                balloon.element.style.backgroundColor = `hsl(${balloon.hue}, 100%, 50%)`;
+                
+                // Update position
+                balloon.y -= balloon.riseSpeed;
+                
+                // Reset balloon when it goes off screen
+                if (balloon.y < -60) {
+                    balloon.y = window.innerHeight + 60;
+                    balloon.x = Math.random() * (window.innerWidth - 50);
+                }
+            });
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            balloons.forEach(balloon => {
+                balloon.x = Math.random() * (window.innerWidth - 50);
+            });
+        });
+    </script>
+</body>
+</html>
