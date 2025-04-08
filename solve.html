@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+// 添加输入验证的完整解决方案
+let a = parseFloat(prompt("请输入二次项系数 a:"));
+let b = parseFloat(prompt("请输入一次项系数 b:"));
+let c = parseFloat(prompt("请输入常数项系数 c:"));
+
+// 验证输入是否为有效数字
+if (isNaN(a) || isNaN(b) || isNaN(c)) {
+    alert("错误：请输入有效的数字系数！");
+    console.error("无效输入：系数必须为数字");
+}
+
+// 验证二次项系数不能为0
+else if (a === 0) {
+    alert("错误：二次项系数 a 不能为0！");
+    console.error("无效输入：a 不能为0");
+}
+
+else {
+    // 计算判别式
+    const delta = b * b - 4 * a * c;
+    console.log("计算判别式 delta =", delta);
+
+    // 处理虚根情况
+    if (delta < 0) {
+        alert("该方程无实根（判别式小于0）");
+        console.log("复数根：无实解");
+    }
+    
+    // 处理实根情况
+    else {
+        const sqrtDelta = Math.sqrt(delta);
+        const x1 = (-b + sqrtDelta) / (2 * a);
+        const x2 = (-b - sqrtDelta) / (2 * a);
+        
+        // 格式化显示结果
+        alert(`方程解为：\nx₁ = ${x1.toFixed(2)}\nx₂ = ${x2.toFixed(2)}`);
+        console.log("x1:", x1, "x2:", x2);
+    }
+}
+</script>
+</body>
+</html>

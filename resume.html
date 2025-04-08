@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Example: Ellipse and CSS Grid Resume</title>
+    <style>
+        /* 样式重置，去除默认的内外边距 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        /* 带有动画径向渐变背景的椭圆样式 */
+        .animated-ellipse {
+            width: 300px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #FF5733, #C70039);
+            animation: radialGradient 4s infinite alternate;
+            margin: 0 auto 30px;
+        }
+
+        @keyframes radialGradient {
+            0% {
+                background: radial-gradient(circle at center, #FF5733, #C70039);
+            }
+            100% {
+                background: radial-gradient(circle at center, #900C3F, #581845);
+            }
+        }
+
+        /* CSS Grid 简历布局样式 */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .resume-left {
+            background-color: #e9e9e9;
+            padding: 20px;
+        }
+
+        .resume-right {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 带有动画径向渐变背景的椭圆 -->
+    <div class="animated-ellipse"></div>
+
+    <!-- 模拟的简历布局，使用 CSS Grid -->
+    <div class="resume-grid">
+        <div class="resume-left">
+            <h2>Contact</h2>
+            <p>Email: example@example.com</p>
+            <p>Phone: +1 123-456-7890</p>
+            <h2>Skills</h2>
+            <p>HTML, CSS, JavaScript</p>
+            <p>Graphic Design</p>
+        </div>
+        <div class="resume-right">
+            <h2>Profile</h2>
+            <p>A highly motivated and creative professional with a passion for web development and design. Skilled in
+                creating engaging user interfaces and experiences.</p>
+            <h2>Work Experience</h2>
+            <p>Web Developer at XYZ Company (2022 - Present)</p>
+            <p>Designed and developed multiple websites, improving user engagement by 30%.</p>
+        </div>
+    </div>
+</body>
+
+</html>
