@@ -1,0 +1,44 @@
+<html>
+<body>
+</body>
+<style>
+
+@keyframes fly
+{
+      from  {top:700px}
+      to   {top:0px}
+}
+<script>
+
+function Balloon(color1,diameter,speed)
+{
+     this.color = color1;
+     this.diameter = diameter;
+     this.speed = speed;
+     this.id = id;
+     this.make = function()
+     {
+          let dv = document.createElement('div');
+          dv.id = 'b' + id;
+          dv.style.cssText = 'width:' + diameter +
+'px;height' + diameter +'px;border-radius:'+
+(diameter/2) + 'px;background-color:' + this.color;
++ ';position:absolute;left:' +(id*50) +
+'px;top:700px';
+          dv.innerHTML =''+ this.id
+           document.body.appendChild(dv);
+     }
+     this.rise = function()
+     {
+               let  dv = document.getElementById('b' + this.id);
+               dv.style.animationName = "fly";
+               dv.style.animationDuration = ~~(700/this.speed)
++ 's' ;
+     }
+}
+let r =(''+(Math.random()*1000000)).replace(/\..*$/,'');
+let s =mATH.RANDOM()*200;
+let w =(Math.random()*200 +30);
+let b = new Ballloon(i ,'#' + r,w , s);
+b.make();
+b.rise();
