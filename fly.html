@@ -1,59 +1,69 @@
 OOP 面对对象 物件导向的
 literal 
-var 概念={id:"abc";age:1,}
-var student = { id:"d100570";
+var 概念 = { id: "abc", age: 1 }; // 修复语法错误
+var student = { id: "d100570" }; // 修复语法错误
 
-a = object create(concrete)
-
-function Student(i,n,a)
-{
-this.id = i; //attribute 特性
-this.method  = function(){}
-...
+function Student(i, n, a) {
+    this.id = i; // attribute 特性
+    this.name = n; // 添加 name 属性
+    this.age = a; // 添加 age 属性
+    this.method = function () {};
 }
 
-let s = new student("D100205");
-     b = new student(".......");
+let s = new Student("D100205", "Alice", 20); // 修复构造函数调用
+let b = new Student("D100206", "Bob", 22); // 修复构造函数调用
 
-student.prototype.methodz= function()
-
+Student.prototype.methodz = function () {
+    // ...existing code...
+};
 
 <style>
-@keyframes fly
-{
-from {top:700px} 
-to{top:0px}
+@keyframes fly {
+    from {
+        top: 700px;
+    }
+    to {
+        top: 0px;
+    }
 }
 </style>
 <script>
-function Balloon( color1, diameter , speed )
-{
-this.color = color1;
-this.diameter = diameter ;
-this. speed = speed;
-this. make = fucntion()
-{
-let dv = document . createElement(“div”)
-dv .id = 'b' + this. id ;
-dv. style.cssText = "width:' + this.diameter + ' px; height:' + this.diameter +'px;border-radius:' + (diameter/2) + 'px;
-background-color:' + this.color +' ; position:absolute;left:' + (id*50)+ 'px; top:700px';
-dv.innerHTML = ' ' + this.id;
-document.body.appendChild(dv);
+function Balloon(id, color1, diameter, speed) { // 添加 id 参数
+    this.id = id; // 修复 id 属性
+    this.color = color1;
+    this.diameter = diameter;
+    this.speed = speed;
+    this.make = function () { // 修复拼写错误
+        let dv = document.createElement("div"); // 修复引号问题
+        dv.id = "b" + this.id;
+        dv.style.cssText =
+            "width:" +
+            this.diameter +
+            "px; height:" +
+            this.diameter +
+            "px; border-radius:" +
+            this.diameter / 2 +
+            "px; background-color:" +
+            this.color +
+            "; position:absolute; left:" +
+            this.id * 50 +
+            "px; top:700px;";
+        dv.innerHTML = this.id;
+        document.body.appendChild(dv);
+    };
+    this.rise = function () {
+        let dv = document.getElementById("b" + this.id);
+        dv.style.animationName = "fly";
+        dv.style.animationDuration = ~~(700 / this.speed) + "s";
+    };
 }
-this.rise = function()
-{
-let dv = document.getElementById( 'b' + this.id );
-dv.style.animationName = "fly" ; 
-dv.style.animationDuration = ~~(700/this.speed) + 's' ;
-}
-}
-for (let i = 0 ; i< 100 ; i++ )
-{
-let r = ' ' + (Math.random()*1000000)).replace(/ \ . . *$/ , ' ');
-ler s = Math.random()*200;
-let w = (Math.random()*200 + 30);
-let b = new Balloon (i, '#' + r , w , s);
-b.make();
-b.rise();
+
+for (let i = 0; i < 100; i++) {
+    let r = Math.random().toString(16).slice(2, 8); // 修复随机颜色生成逻辑
+    let s = Math.random() * 200;
+    let w = Math.random() * 200 + 30;
+    let b = new Balloon(i, "#" + r, w, s); // 修复构造函数调用
+    b.make();
+    b.rise();
 }
 </script>
