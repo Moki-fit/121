@@ -1,0 +1,59 @@
+OOP 面对对象 物件导向的
+literal 
+var 概念={id:"abc";age:1,}
+var student = { id:"d100570";
+
+a = object create(concrete)
+
+function Student(i,n,a)
+{
+this.id = i; //attribute 特性
+this.method  = function(){}
+...
+}
+
+let s = new student("D100205");
+     b = new student(".......");
+
+student.prototype.methodz= function()
+
+
+<style>
+@keyframes fly
+{
+from {top:700px} 
+to{top:0px}
+}
+</style>
+<script>
+function Balloon( color1, diameter , speed )
+{
+this.color = color1;
+this.diameter = diameter ;
+this. speed = speed;
+this. make = fucntion()
+{
+let dv = document . createElement(“div”)
+dv .id = 'b' + this. id ;
+dv. style.cssText = "width:' + this.diameter + ' px; height:' + this.diameter +'px;border-radius:' + (diameter/2) + 'px;
+background-color:' + this.color +' ; position:absolute;left:' + (id*50)+ 'px; top:700px';
+dv.innerHTML = ' ' + this.id;
+document.body.appendChild(dv);
+}
+this.rise = function()
+{
+let dv = document.getElementById( 'b' + this.id );
+dv.style.animationName = "fly" ; 
+dv.style.animationDuration = ~~(700/this.speed) + 's' ;
+}
+}
+for (let i = 0 ; i< 100 ; i++ )
+{
+let r = ' ' + (Math.random()*1000000)).replace(/ \ . . *$/ , ' ');
+ler s = Math.random()*200;
+let w = (Math.random()*200 + 30);
+let b = new Balloon (i, '#' + r , w , s);
+b.make();
+b.rise();
+}
+</script>
