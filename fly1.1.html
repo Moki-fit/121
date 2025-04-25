@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @keyframes fly {
+            from {
+                top: 700px;
+                transform: scale(1);
+            }
+            to {
+                top: 0px;
+                transform: scale(1.5);
+            }
+        }
+        .burst {
+            animation: burst 0.5s ease-out forwards !important;
+        }
+        @keyframes burst {
+            0% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function Balloon(id, color1, diameter, speed) {
+            this.id = id;
+            this.color = color1;
+            this.diameter = diameter;
+            this.speed = speed;
+            this.make = function() {
+                let dv = document.createElement("div");
+                dv.id = "b" + this.id;
+                dv.style.cssText =
+                    "width:" +
+                    this.diameter +
+                    "px; height:" +
+                    this.diameter +
+                    "px; border-radius:" +
+                    this.diameter / 2 +
+                    "px; background-color:" +
+                    this.color +
+                    "; position:absolute; left:" +
+                    this.id * 50 +
+                    "px; top:700px;";
+                dv.innerHTML = this.id;
+                document.body.appendChild(dv);
+            };
+            
+            this.rise = function() {
+                let dv = document.getElementById("b" + this.id);
+                dv.style.animationName = "fly";
+                const duration = ~~(700 / this.speed);
+                dv.style.animationDuration = duration + "s";
+                
+                // 在随机高度触发爆炸
+                setTimeout(() => {
+                    const burstHeight = Math.random() * 400 + 100; // 在100-500px之间随机爆炸
+                    setTimeout(() => {
+                        dv.classList.add('burst');
+                        setTimeout(() => {
+                            dv.remove();
+                        }, 500);
+                    }, (burstHeight / 700) * duration * 1000);
+                }, id * 100); // 让气球依次爆炸
+            };
+        }
+
+        const colors = ['red', 'orange', 'yellow', 'green', 'black', 'blue', 'purple'];
+        
+        for (let i = 0; i < 100; i++) {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const speed = Math.random() * 200;
+            const width = Math.random() * 200 + 30;
+            const b = new Balloon(i, randomColor, width, speed);
+            b.make();
+            b.rise();
+        }
+    </script>
+</body>
+</html>
