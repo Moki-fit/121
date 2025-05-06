@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solar System with Sortable Table</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+        #solarTable {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+            border-collapse: collapse;
+            display: none;
+        }
+        #solarTable th, #solarTable td {
+            border: 1px solid black;
+            padding: 8px;
+            cursor: pointer;
+        }
+        #solarTable th:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Celestial objects array
+        const objects = [
+            { name: 'Sun',     type: 'star',  mass: 500, size: 30, color: 'yellow', orbitRadius: 0,    angle: 0 },
+            { name: 'Mercury', type: 'planet', mass: 10, size: 5,  color: 'gray',   orbitRadius: 50,   angle: 0 },
+            { name: 'Venus',   type: 'planet', mass: 15, size: 8,  color: 'orange', orbitRadius: 80,   angle: 0 },
+            { name: 'Earth',   type: 'planet', mass: 20, size: 10, color: 'blue',    orbitRadius: 120,  angle: 0 },
+            { name: 'Mars',    type: 'planet', mass: 12, size: 7,  color: 'red',     orbitRadius: 150,  angle: 0 },
+            { name: 'Jupiter', type: 'planet', mass: 300, size: 25, color: 'brown',  orbitRadius: 200,  angle: 0 },
+            { name: 'Saturn',  type: 'planet', mass: 250, size: 20, color: 'gold',   orbitRadius: 250,  angle: 0 },
+            { name: 'Uranus',  type: 'planet', mass: 150, size: 15, color: 'cyan',   orbitRadius: 300,  angle: 0 },
+            { name: 'Neptune', type: 'planet', mass: 170, size: 16, color: 'navy',   orbitRadius: 350,  angle: 0 },
+            { name: 'Pluto',   type: 'planet', mass: 5,  size: 3,  color: 'tan',    orbitRadius: 400,  angle: 0 }
+        ];
+
+        // Create table on first click
+        let tableCreated = false;
+        document.addEventListener('click', createTable);
+
+        function createTable() {
+            if (tableCreated) return;
+            tableCreated = true;
+            
+            const table = document.createElement('table');
+            table.id = 'solarTable';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Mass</th>
+                        <th>Orbit Radius</th>
+                        <th>Color</th>
+                        <th>Diameter</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${objects.map(obj => `
+                        <tr>
+                            <td>${obj.name}</td>
+                            <td>${obj.mass}</td>
+                            <td>${obj.orbitRadius}</td>
+                            <td>${obj.color}</td>
+                            <td>${obj.size * 2}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+            
+            // Add sorting functionality
+            table.querySelectorAll('th').forEach((th, index) => {
+                th.addEventListener('click', () => sortTable(index));
+            });
+            
+            document.body.appendChild(table);
+            table.style.display = 'table';
+        }
+
+        let sortColumn = null;
+        let ascending = true;
+
+        function sortTable(columnIndex) {
+            const tbody = document.querySelector('#solarTable tbody');
+            const rows = Array.from(tbody.rows);
+
+            // Toggle sort direction if clicking same column
+            if (sortColumn === columnIndex) {
+                ascending = !ascending;
+            } else {
+                sortColumn = columnIndex;
+                ascending = true;
+            }
+
+            rows.sort((a, b) => {
+                const aVal = a.cells[columnIndex].textContent;
+                const bVal = b.cells[columnIndex].textContent;
+                
+                // Numeric comparison
+                if (!isNaN(aVal) && !isNaN(bVal)) {
+                    return ascending ? aVal - bVal : bVal - aVal;
+                }
+                // String comparison
+                return ascending ? 
+                    aVal.localeCompare(bVal) : 
+                    bVal.localeCompare(aVal);
+            });
+
+            // Clear and re-append sorted rows
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // Animation loop (original simulation code)
+        function animate() {
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            objects.forEach(obj => {
+                if (obj.type === 'planet') {
+                    obj.angle += 0.5 / Math.sqrt(obj.orbitRadius);
+                    obj.x = canvas.width/2 + obj.orbitRadius * Math.cos(obj.angle * Math.PI/180);
+                    obj.y = canvas.height/2 + obj.orbitRadius * Math.sin(obj.angle * Math.PI/180);
+                }
+
+                ctx.beginPath();
+                ctx.arc(obj.x, obj.y, obj.size, 0, Math.PI * 2);
+                ctx.fillStyle = obj.color;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Position objects initially
+        objects.forEach(obj => {
+            obj.x = canvas.width/2 + obj.orbitRadius;
+            obj.y = canvas.height/2;
+        });
+
+        animate();
+    </script>
+</body>
+</html>
